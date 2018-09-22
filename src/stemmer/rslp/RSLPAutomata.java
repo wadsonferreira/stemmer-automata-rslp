@@ -6,6 +6,8 @@ public class RSLPAutomata {
 	
 	public static final boolean KEEP_ACCENTS = false;
 	
+	private boolean suffixRemoved = false;
+	
 	private static final int STOP = -1;
 	
 	public String apply(String in) {
@@ -833,5 +835,1461 @@ public class RSLPAutomata {
 		}
 		return in;
 	}
-	
+
+	public String nounReduction(String in){
+
+		int position = in.length() - 1;
+		int state = 1;
+		boolean accept = false;
+
+		while(position >= 0){
+			switch(state){
+			case 1:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 2;
+					position--;
+				break;
+				case 'e':
+					state = 34;
+					position--;
+				break;
+				case 'o':
+					state = 71;
+					position--;
+				break;
+				case 'ç':
+					state = 27;
+					position--;
+				break;
+				case 'm':
+					state = 67;
+					position--;
+				break;
+				case 'r':
+					state = 121;
+					position--;
+				break;
+				case 's':
+					state = 128;
+					position--;
+				break;
+				case 'z':
+					state = 130;
+					position--;
+				break;
+				case 'l':
+					state = 50;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 2:
+				switch(in.charAt(position)){
+				case 't':
+					state = 3;
+					position--;
+				break;
+				case 'i':
+					state = 4;
+					position--;
+				break;
+				case 'r':
+					state = 126;
+					position--;
+				break;
+				case 'z':
+					state = 5;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 3:
+				if(in.charAt(position) == 's'){
+					state = 6;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 4:
+				switch(in.charAt(position)){
+				case 'r':
+					state = 7;
+					position--;
+				break;
+				case 'c':
+					state = 8;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 5:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in eza
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 6:
+				if(in.charAt(position) == 'i'){
+					state = 10;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 7:
+				switch(in.charAt(position)){
+				case 'o':
+					//rule for word ending in oria
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ORIA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				case 'ó':
+					state = 11;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 8:
+				if(in.charAt(position) == 'n'){
+					state = 12;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 10:
+				if(accept){
+					//rule for word ending in ista
+					if(position >= 3){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'l':
+						state = 14;
+						position--;
+					break;
+					case 'n':
+						state = 15;
+						position--;
+					break;
+					default:
+						//rule for word ending in ista
+						if(position >= 3){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 11:
+				if(in.charAt(position) == 't'){
+					state = 21;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 12:
+				switch(in.charAt(position)){
+				case 'ê':
+					//rule for word ending in ência
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'â':
+					//rule for word ending in ância
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ANCIA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 14:
+				if(in.charAt(position) == 'a'){
+					state = 16;
+					position--;
+				}else{
+					state = 10;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 15:
+				if(in.charAt(position) == 'o'){
+					state = 134;
+					position--;
+				}else{
+					state = 10;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 16:
+				if(accept){
+					//rule for word ending in alista
+					if(position >= 4){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'i'){
+						state = 17;
+						position--;
+					}else{
+						//rule for word ending in alista
+						if(position >= 4){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 17:
+				if(in.charAt(position) == 'c'){
+					state = 18;
+					position--;
+				}else{
+					state = 16;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 18:
+				if(in.charAt(position) == 'n'){
+					state = 19;
+					position--;
+				}else{
+					state = 16;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 19:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in encialista
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 16;
+					position += 3;
+					accept = true;
+				}
+			break;
+			case 21:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in atória
+					if(position >= 4){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 24:
+				if(in.charAt(position) == 'c'){
+					state = 25;
+					position--;
+				}else{
+					state = 10;
+					position += 3;
+					accept = true;
+				}
+			break;
+			case 25:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in icionista
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}else{
+					//rule for word ending in cionista
+					if(position >= 4){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 27:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 28;
+					position--;
+				break;
+				case 'i':
+					//rule for word ending in iç
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_IC) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 28:
+				if(accept){
+					//rule for word ending in aç
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_AC) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'z'){
+						state = 30;
+						position--;
+					}else{
+						//rule for word ending in aç
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.NOUN_AC) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 30:
+				if(in.charAt(position) == 'i'){
+					state = 31;
+					position--;
+				}else{
+					state = 28;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 31:
+				if(accept){
+					//rule for word ending in izaç
+					if(position >= 4){
+						if(RSLPException.isException(in, RSLPException.NOUN_IZAC) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'l'){
+						state = 32;
+						position--;
+					}else{
+						//rule for word ending in izaç
+						if(position >= 4){
+							if(RSLPException.isException(in, RSLPException.NOUN_IZAC) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 32:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in alizaç
+					if(position >= 4){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 31;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 34:
+				switch(in.charAt(position)){
+				case 'd':
+					state = 35;
+					position--;
+				break;
+				case 't':
+					state = 36;
+					position--;
+				break;
+				case 'c':
+					state = 37;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 35:
+				if(in.charAt(position) == 'a'){
+					state = 39;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 36:
+				if(in.charAt(position) == 'n'){
+					state = 38;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 37:
+				if(in.charAt(position) == 'i'){
+					state = 64;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 38:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in ante
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.NOUN_ANTE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'e':
+					//rule for word ending in ente
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ENTE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 39:
+				if(in.charAt(position) == 'd'){
+					state = 42;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 42:
+				if(in.charAt(position) == 'i'){
+					state = 43;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 43:
+				if(accept){
+					//rule for word ending in idade
+					if(position >= 4){
+						if(RSLPException.isException(in, RSLPException.NOUN_IDADE) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'v':
+						state = 44;
+						position--;
+					break;
+					case 'l':
+						state = 46;
+						position--;
+					break;
+					default:
+						//rule for word ending in idade
+						if(position >= 4){
+							if(RSLPException.isException(in, RSLPException.NOUN_IDADE) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 44:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in ividade
+					if(position >= 4){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 43;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 46:
+				if(in.charAt(position) == 'i'){
+					state = 47;
+					position--;
+				}else{
+					state = 43;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 47:
+				if(in.charAt(position) == 'b'){
+					state = 48;
+					position--;
+				}else{
+					state = 43;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 48:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in abilidade
+					if(position >= 4){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 43;
+					position += 3;
+					accept = true;
+				}
+			break;
+			case 50:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 51;
+					position--;
+				break;
+				case 'e':
+					state = 54;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 51:
+				if(accept){
+					//rule for word ending in al
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_AL) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'u':
+						//rule for word ending in ual
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.NOUN_UAL) == false){
+								in = in.substring(0, position);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					break;
+					case 'i':
+						state = 52;
+						position--;
+					break;
+					case 'n':
+						state = 57;
+						position--;
+					break;
+					default:
+						//rule for word ending in al
+						if(position >= 3){
+							if(RSLPException.isException(in, RSLPException.NOUN_AL) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 52:
+				if(accept){
+					//rule for word ending in ial
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'c'){
+						state = 59;
+						position--;
+					}else{
+						//rule for word ending in ial
+						if(position >= 2){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 54:
+				if(in.charAt(position) == 'v'){
+					state = 55;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 55:
+				switch(in.charAt(position)){
+				case 'á':
+					//rule for word ending in ável
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.NOUN_AVEL) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'í':
+					//rule for word ending in ível
+					if(position >= 4){
+						if(RSLPException.isException(in, RSLPException.NOUN_IVEL) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 57:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in inal
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_INAL) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				case 'o':
+					state = 62;
+					position--;
+				break;
+				default:
+					state = 51;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 59:
+				if(in.charAt(position) == 'n'){
+					state = 60;
+					position--;
+				}else{
+					state = 52;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 60:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in encial
+					if(position >= 4){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 52;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 62:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in ional
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 51;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 64:
+				if(accept){
+					//rule for word ending in ice
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ICE) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'u'){
+						state = 65;
+						position--;
+					}else{
+						//rule for word ending in ice
+						if(position >= 3){
+							if(RSLPException.isException(in, RSLPException.NOUN_ICE) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 65:
+				if(in.charAt(position) == 'q'){
+					//rule for word ending in quice
+					if(position >= 3){
+						in = in.substring(0, position) + "c";
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 64;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 67:
+				if(in.charAt(position) == 'e'){
+					state = 68;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 68:
+				if(in.charAt(position) == 'g'){
+					state = 69;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 69:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in agem
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_AGEM) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 71:
+				switch(in.charAt(position)){
+				case 'n':
+					state = 119;
+					position--;
+				break;
+				case 't':
+					state = 72;
+					position--;
+				break;
+				case 'd':
+					state = 73;
+					position--;
+				break;
+				case 'v':
+					state = 74;
+					position--;
+				break;
+				case 'r':
+					state = 75;
+					position--;
+				break;
+				case 's':
+					state = 76;
+					position--;
+				break;
+				case 'm':
+					state = 77;
+					position--;
+				break;
+				case 'i':
+					state = 78;
+					position--;
+				break;
+				case 'c':
+					state = 79;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 72:
+				if(in.charAt(position) == 'n'){
+					state = 80;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 73:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 81;
+					position--;
+				break;
+				case 'i':
+					//rule for word ending in ido
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_IDO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 74:
+				if(in.charAt(position) == 'i'){
+					state = 82;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 75:
+				switch(in.charAt(position)){
+				case 'u':
+					state = 84;
+					position--;
+				break;
+				case 'i':
+					state = 85;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 76:
+				if(in.charAt(position) == 'o'){
+					//rule for word ending in oso
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_OSO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 77:
+				if(in.charAt(position) == 's'){
+					state = 105;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 78:
+				if(in.charAt(position) == 'r'){
+					state = 107;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 79:
+				switch(in.charAt(position)){
+				case 'i':
+					state = 110;
+					position--;
+				break;
+				case 's':
+					state = 115;
+					position--;
+				break;
+				case 'a':
+					state = 117;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 80:
+				if(in.charAt(position) == 'e'){
+					state = 88;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 81:
+				if(accept){
+					//rule for word ending in ado
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.NOUN_ADO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'z'){
+						state = 93;
+						position--;
+					}else{
+						//rule for word ending in ado
+						if(position >= 1){
+							if(RSLPException.isException(in, RSLPException.NOUN_ADO) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 82:
+				if(in.charAt(position) == 't'){
+					state = 98;
+					position--;
+				}else{
+					//rule for word ending in ivo
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_IVO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}
+			break;
+			case 84:
+				if(in.charAt(position) == 'o'){
+					state = 100;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 85:
+				if(in.charAt(position) == 'e'){
+					state = 86;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 86:
+				if(accept){
+					//rule for word ending in eiro
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_EIRO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'u'){
+						state = 103;
+						position--;
+					}else{
+						//rule for word ending in eiro
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.NOUN_EIRO) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 88:
+				if(in.charAt(position) == 'm'){
+					state = 89;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 89:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 90;
+					position--;
+				break;
+				case 'i':
+					//rule for word ending in imento
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 90:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in iamento
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}else{
+					//rule for word ending in amento
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_AMENTO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 93:
+				if(in.charAt(position) == 'i'){
+					state = 94;
+					position--;
+				}else{
+					state = 81;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 94:
+				if(accept){
+					//rule for word ending in izado
+					if(position >= 4){
+						if(RSLPException.isException(in, RSLPException.NOUN_IZADO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'l':
+						state = 95;
+						position--;
+					break;
+					case 't':
+						state = 96;
+						position--;
+					break;
+					default:
+						//rule for word ending in izado
+						if(position >= 4){
+							if(RSLPException.isException(in, RSLPException.NOUN_IZADO) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 95:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in alizado
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 94;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 96:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in atizado
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 94;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 98:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in ativo
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ATIVO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}else{
+					//rule for word ending in tivo
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_TIVO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 100:
+				if(in.charAt(position) == 'd'){
+					state = 101;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 101:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in edouro
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 103:
+				if(in.charAt(position) == 'q'){
+					//rule for word ending in queiro
+					if(position >= 2){
+						in = in.substring(0, position) + "c";
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 86;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 105:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in ismo
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_ISMO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 107:
+				switch(in.charAt(position)){
+				case 'á':
+					//rule for word ending in ário
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.NOUN_ARIO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'é':
+					//rule for word ending in ério
+					if(position >= 5){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 110:
+				if(accept){
+					//rule for word ending in ico
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ICO) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 't'){
+						state = 111;
+						position--;
+					}else{
+						//rule for word ending in ico
+						if(position >= 3){
+							if(RSLPException.isException(in, RSLPException.NOUN_ICO) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 111:
+				switch(in.charAt(position)){
+				case 'á':
+					//rule for word ending in ático
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 's':
+					state = 112;
+					position--;
+				break;
+				default:
+					state = 110;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 112:
+				if(in.charAt(position) == 'á'){
+					//rule for word ending in ástico
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_ASTICO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					state = 110;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 115:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in esco
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 117:
+				if(in.charAt(position) == 'í'){
+					//rule for word ending in íaco
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 119:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in ano
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 121:
+				if(in.charAt(position) == 'o'){
+					state = 122;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 122:
+				if(accept){
+					//rule for word ending in or
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.NOUN_OR) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'd'){
+						state = 123;
+						position--;
+					}else{
+						//rule for word ending in or
+						if(position >= 1){
+							if(RSLPException.isException(in, RSLPException.NOUN_OR) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 123:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in ador
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in edor
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in idor
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_IDOR) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					state = 122;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 126:
+				if(in.charAt(position) == 'u'){
+					//rule for word ending in ura
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.NOUN_URA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 128:
+				if(in.charAt(position) == 'ê'){
+					//rule for word ending in ês
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 130:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in ez
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				}
+				position = STOP;
+			break;
+			case 134:
+				if(in.charAt(position) == 'i'){
+					state = 24;
+					position--;
+				}else{
+					state = 10;
+					position += 2;
+					accept = true;
+				}
+			break;
+			}
+		}
+		return in;
+	}
 }

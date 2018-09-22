@@ -40,7 +40,7 @@ public final class RSLPSuffixStrippingRules {
 
 	public static final RSLPStrippingRule[] DEGREE_REDUCTION_RULES = {
 		new RSLPStrippingRule("díssimo", 5, "", null, "cansadíssimo", "cansa"),  //different from the article
-		new RSLPStrippingRule("abilíssimo", 5, "", null, "admirabilíssimo", "admir"), //the word given at the original article (amabilíssimo) does not make sanse because the stem size will be three
+		new RSLPStrippingRule("abilíssimo", 5, "", null, "admirabilíssimo", "admir"), //the word given at the original article (amabilíssimo) does not make sense because the stem size will be three
 		new RSLPStrippingRule("íssimo", 3, "", null, "fortíssimo", "fort"),
 		new RSLPStrippingRule("érrimo", 4, "", null, "chiquérrimo", "chiqu"),
 		new RSLPStrippingRule("zinho", 2, "", null, "pezinho", "pe"),
@@ -64,24 +64,24 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("alista", 5, "", null, "minimalista", "minim"),
 		new RSLPStrippingRule("agem", 3, "", RSLPException.NOUN_AGEM, "contagem", "cont"),
 		new RSLPStrippingRule("iamento", 4, "", RSLPException.NOUN_AMENTO, "gerenciamento", "gerenc"),
-		new RSLPStrippingRule("amento", 3, "", RSLPException.NOUN_AMENTO, "monitoramento", "monit"),
+		new RSLPStrippingRule("amento", 3, "", RSLPException.NOUN_AMENTO, "monitoramento", "monitor"),//different from the article
 		new RSLPStrippingRule("imento", 3, "", null, "nascimento", "nasc"),
 		new RSLPStrippingRule("alizado", 4, "", null, "comercializado", "comerci"),
 		new RSLPStrippingRule("atizado", 4, "", null, "traumatizado", "traum"),
 		new RSLPStrippingRule("izado", 5, "", RSLPException.NOUN_IZADO, "alfabetizado", "alfabet"),
 		new RSLPStrippingRule("ativo", 4, "", RSLPException.NOUN_ATIVO, "associativo", "associ"),
 		new RSLPStrippingRule("tivo", 4, "", RSLPException.NOUN_TIVO, "contraceptivo", "contracep"),
-		new RSLPStrippingRule("ivo", 4, "", RSLPException.NOUN_IVO, "esportivo", "esport"),
+		new RSLPStrippingRule("ivo", 4, "", RSLPException.NOUN_IVO, "coercivo", "coerc"), //the word given at the original article (esportivo) does not make sense because it will be processed by the rule 'tivo'
 		new RSLPStrippingRule("ado", 2, "", RSLPException.NOUN_ADO, "abalado", "abal"),
 		new RSLPStrippingRule("ido", 3, "", RSLPException.NOUN_IDO, "impedido", "imped"),
 		new RSLPStrippingRule("ador", 3, "", null, "ralador", "ral"),
 		new RSLPStrippingRule("edor", 3, "", null, "entendedor", "entend"),
-		new RSLPStrippingRule("idor", 4, "", RSLPException.NOUN_IDOR, "cumpridor", "cump"),
+		new RSLPStrippingRule("idor", 4, "", RSLPException.NOUN_IDOR, "cumpridor", "cumpr"),
 		new RSLPStrippingRule("atória", 5, "", null, "obrigatória", "obrig"),
 		new RSLPStrippingRule("or", 2, "", RSLPException.NOUN_OR, "produtor", "produt"),
 		new RSLPStrippingRule("abilidade", 5, "", null, "comparabilidade", "compar"),
 		new RSLPStrippingRule("icionista", 4, "", null, "abolicionista", "abol"),
-		new RSLPStrippingRule("cionista", 5, "", null, "intervencionista", "intervenc"),
+		new RSLPStrippingRule("cionista", 5, "", null, "intervencionista", "interven"),
 		new RSLPStrippingRule("ional", 4, "", null, "profissional", "profiss"),
 		new RSLPStrippingRule("ência", 3, "", null, "referência", "refer"),
 		new RSLPStrippingRule("ância", 4, "", RSLPException.NOUN_ANCIA, "repugnância", "repugn"),
@@ -107,8 +107,8 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("ividade", 5, "", null, "produtividade", "produt"),
 		new RSLPStrippingRule("idade", 5, "", RSLPException.NOUN_IDADE, "profundidade", "profund"),
 		new RSLPStrippingRule("oria", 4, "", RSLPException.NOUN_ORIA, "aposentadoria", "aposentad"),
-		new RSLPStrippingRule("encial", 5, "", null, "existencial", "exis"),
-		new RSLPStrippingRule("ista", 4, "", null, "artista", "art"),
+		new RSLPStrippingRule("encial", 5, "", null, "existencial", "exist"),
+		new RSLPStrippingRule("ista", 4, "", null, "vigarista", "vigar"), //the word given at the original article (artista) does not make sense because the stem size will be three
 		new RSLPStrippingRule("quice", 4, "c", null, "maluquice", "maluc"),
 		new RSLPStrippingRule("ice", 4, "", RSLPException.NOUN_ICE, "chatice", "chat"),
 		new RSLPStrippingRule("íaco", 3, "", null, "demoníaco", "demon"),
