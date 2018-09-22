@@ -2292,4 +2292,1311 @@ public class RSLPAutomata {
 		}
 		return in;
 	}
+	
+	public String verbReduction(String in){
+
+		int position = in.length() - 1;
+		int state = 0;
+		boolean accept = false;
+
+		while(position >= 0){
+			switch(state){
+			case 0:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 4;
+					position--;
+				break;
+				case 'e':
+					state = 5;
+					position--;
+				break;
+				case 'i':
+					state = 2;
+					position--;
+				break;
+				case 'o':
+					state = 1;
+					position--;
+				break;
+				case 'u':
+					state = 8;
+					position--;
+				break;
+				case 'r':
+					state = 7;
+					position--;
+				break;
+				case 'á':
+					state = 6;
+					position--;
+				break;
+				case 'm':
+					state = 3;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 1:
+				switch(in.charAt(position)){
+				case 'm':
+					state = 9;
+					position--;
+				break;
+				case 'd':
+					state = 32;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 2:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in ai
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					state = 44;
+					position--;
+				break;
+				default:
+					//rule for word ending in i
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				}
+			break;
+			case 3:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 66;
+					position--;	
+				break;
+				case 'e':
+					state = 70;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 4:
+				switch(in.charAt(position)){
+				case 'i':
+					state = 89;
+					position--;
+				break;
+				case 'v':
+					state = 96;
+					position--;
+				break;
+				case 'r':
+					state = 94;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 5:
+				switch(in.charAt(position)){
+				case 'r':
+					state = 116;
+					position--;
+				break;
+				case 'd':
+					state = 100;
+					position--;
+				break;
+				case 's':
+					state = 103;
+					position--;
+				break;
+				case 't':
+					state = 106;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 6:
+				if(in.charAt(position) == 'r'){
+					state = 120;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 7:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 124;
+					position--;
+				break;
+				case 'e':
+					//rule for word ending in er
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_ER) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in ir
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IR) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 8:
+				switch(in.charAt(position)){
+				case 'o':
+					//rule for word ending in ou
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'e':
+					//rule for word ending in eu
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_EU) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'i':
+					//rule for word ending in iu
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 9:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 10;
+					position--;
+				break;
+				case 'e':
+					state = 14;
+					position--;
+				break;
+				case 'r':
+					state = 38;
+					position--;
+				break;
+				case 'o':
+					//rule for word ending in omo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in imo
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IMO) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 10:
+				if(accept){
+					//rule for word ending in amo
+					if(position >= 1){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'í':
+						state = 11;
+						position--;
+					break;
+					case 'v':
+						state = 26;
+						position--;
+					break;
+					case 'r':
+						state = 22;
+						position--;
+					break;
+					default:
+						//rule for word ending in amo
+						if(position >= 1){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 11:
+				if(accept){
+					//rule for word ending in íamo
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'r'){
+						state = 12;
+						position--;
+					}else{
+						//rule for word ending in íamo
+						if(position >= 2){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 12:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in iríamo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in eríamo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in aríamo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 11;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 14:
+				if(accept){
+					//rule for word ending in emo
+					if(position >= 1){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 's':
+						state = 15;
+						position--;
+					break;
+					case 'r':
+						state = 24;
+						position--;
+					break;
+					default:
+						//rule for word ending in emo
+						if(position >= 1){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 15:
+				if(in.charAt(position) == 's'){
+					state = 16;
+					position--;
+				}else{
+					state = 14;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 16:
+				switch(in.charAt(position)){
+				case 'ê':
+					//rule for word ending in êssemo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'í':
+					//rule for word ending in íssemo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'á':
+					//rule for word ending in ássemo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 14;
+					position += 2;
+					accept = true;
+				break;
+				}
+			break;
+			case 22:
+				switch(in.charAt(position)){
+				case 'í':
+					//rule for word ending in íramo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'ê':
+					//rule for word ending in êramo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'á':
+					//rule for word ending in áramo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 10;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 24:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in aremo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in eremo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in iremo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 14;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 26:
+				if(in.charAt(position) == 'á'){
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 10;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 32:
+				if(in.charAt(position) == 'n'){
+					state = 33;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 33:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in ando
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'e':
+					//rule for word ending in endo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'i':
+					//rule for word ending in indo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'o':
+					//rule for word ending in ondo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 38:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in armo
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'e':
+					//rule for word ending in ermo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'i':
+					//rule for word ending in irmo
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 44:
+				if(accept){
+					//rule for word ending in ei
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'r':
+						state = 45;
+						position--;
+					break;
+					case 's':
+						state = 51;
+						position--;
+					break;
+					case 'v':
+						state = 59;
+						position--;
+					break;
+					case 'u':
+						//rule for word ending in uei
+						if(position >= 2){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					case 'í':
+						state = 47;
+						position--;
+					break;
+					default:
+						//rule for word ending in ei
+						if(position >= 2){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 45:
+				switch(in.charAt(position)){
+				case 'ê':
+					//rule for word ending in êrei
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in arei
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in erei
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'á':
+					//rule for word ending in árei
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'í':
+					//rule for word ending in írei
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IREI) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					state = 44;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 47:
+				if(accept){
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'r'){
+						state = 49;
+						position--;
+					}else{
+						if(position >= 2){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 49:
+				switch(in.charAt(position)){
+				case 'i':
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 47;
+					position += 1;
+					accept = true;
+				break;
+				}
+				
+			break;
+			case 51:
+				if(in.charAt(position) == 's'){
+					state = 52;
+					position--;
+				}else{
+					state = 44;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 52:
+				switch(in.charAt(position)){
+				case 'á':
+					//rule for word ending in ássei
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'ê':
+					//rule for word ending in êssei
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'í':
+					//rule for word ending in íssei
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 44;
+					position += 2;
+					accept = true;
+				break;
+				}
+			break;
+			case 59:
+				if(in.charAt(position) == 'á'){
+					//rule for word ending in ávei
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					state = 44;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 66:
+				if(accept){
+					//rule for word ending in am
+					if(position >= 1){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'i':
+						state = 67;
+						position--;
+					break;
+					case 'r':
+						state = 78;
+						position--;
+					break;
+					case 'v':
+						state = 82;
+						position--;
+					break;
+					default:
+						//rule for word ending in am
+						if(position >= 1){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 67:
+				//rule for word ending in iam
+				if(accept){
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'r'){
+						state = 68;
+						position--;
+					}else{
+						//rule for word ending in iam
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.VERB_IAM) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 68:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in iriam
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in eriam
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in ariam
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 67;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 70:
+				if(accept){
+					//rule for word ending in em
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_EM) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 's':
+						state = 71;
+						position--;
+					break;
+					case 'r':
+						state = 80;
+						position--;
+					break;
+					default:
+						//rule for word ending in em
+						if(position >= 1){
+							if(RSLPException.isException(in, RSLPException.VERB_EM) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 71:
+				if(in.charAt(position) == 's'){
+					state = 72;
+					position--;
+				}else{
+					state = 70;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 72:
+				switch(in.charAt(position)){
+				case 'e':
+					//rule for word ending in essem
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in assem
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in issem
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 70;
+					position += 2;
+					accept = true;
+				break;
+				}
+			break;
+			case 78:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in iram
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in aram
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in eram
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'í':
+					//rule for word ending in íram
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 66;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 80:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in arem
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'e':
+					//rule for word ending in erem
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in irem
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IREM) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				break;
+				default:
+					state = 70;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 82:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in avam
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_AVAM) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					state = 66;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 89:
+				if(accept){
+					//rule for word ending in ia
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IA) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+					position = STOP;
+				}else{
+					if(in.charAt(position) == 'r'){
+						state = 90;
+						position--;
+					}else{
+						//rule for word ending in ia
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.VERB_IA) == false){
+								in = in.substring(0, position + 1);
+								suffixRemoved = true;
+							}
+						}
+						position = STOP;
+					}
+				}
+			break;
+			case 90:
+				switch(in.charAt(position)){
+				case 'e':
+					//rule for word ending in eria
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'a':
+					//rule for word ending in aria
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				case 'i':
+					//rule for word ending in iria
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+					position = STOP;
+				break;
+				default:
+					state = 89;
+					position += 1;
+					accept = true;
+				break;
+				}
+			break;
+			case 94:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in ira
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IRA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'a':
+					//rule for word ending in ara
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_ARA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'e':
+					//rule for word ending in era
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_ERA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 96:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in ava
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_AVA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 100:
+				if(in.charAt(position) == 'r'){
+					state = 101;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 101:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in irde
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'e':
+					//rule for word ending in erde
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'a':
+					//rule for word ending in arde
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 103:
+				if(in.charAt(position) == 's'){
+					state = 104;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 104:
+				switch(in.charAt(position)){
+				case 'e':
+					//rule for word ending in esse
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'i':
+					//rule for word ending in isse
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'a':
+					//rule for word ending in asse
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 106:
+				if(in.charAt(position) == 's'){
+					state = 107;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 107:
+				switch(in.charAt(position)){
+				case 'e':
+					//rule for word ending in este
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_ESTE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'a':
+					//rule for word ending in aste
+					if(position >= 1){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'i':
+					//rule for word ending in iste
+					if(position >= 3){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 116:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in ire
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_IRE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'a':
+					//rule for word ending in are
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_ARE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'e':
+					//rule for word ending in ere
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.VERB_ERE) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 120:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in irá
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				case 'a':
+					//rule for word ending in ará
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_ARAA) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				break;
+				case 'e':
+					//rule for word ending in erá
+					if(position >= 2){
+						in = in.substring(0, position);
+						suffixRemoved = true;
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 124:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in ear
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.VERB_EAR) == false){
+							in = in.substring(0, position);
+							suffixRemoved = true;
+						}
+					}
+				}else{
+					//rule for word ending in ar
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.VERB_AR) == false){
+							in = in.substring(0, position + 1);
+							suffixRemoved = true;
+						}
+					}
+				}
+				position = STOP;
+			break;
+			}
+		}
+		return in;
+	}
+
 }
