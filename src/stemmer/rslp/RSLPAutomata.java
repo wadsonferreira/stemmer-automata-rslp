@@ -3598,5 +3598,18 @@ public class RSLPAutomata {
 		}
 		return in;
 	}
+	
+	public String removeVowel(String in){
+		if(in.length() > 2 && RSLPException.isException(in, RSLPException.VOWEL) == false){
+			if(in.endsWith("a") || in.endsWith("e") || in.endsWith("o")){
+				return in.substring(0, in.length() - 1);
+			}
+		}
+		return in;
+	}
+
+	public String removeAccents(String in){
+		return in.replaceAll("à|ã|á|â", "a").replaceAll("é|ê", "e").replaceAll("í", "i").replaceAll("ó|õ|ô", "o").replaceAll("ú", "");
+	}
 
 }
