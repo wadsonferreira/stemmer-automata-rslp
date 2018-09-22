@@ -1,43 +1,106 @@
+/* --------------------------------------------------------------------------------- */
+/*                              Author: Wadson Ferreira                              */
+/*                            wadson.ferreira@outlook.com                            */
+/*                                                                                   */
+/*               **     This banner notice must not be removed      **               */
+/* --------------------------------------------------------------------------------- */
+/*  Copyright(c) 2015, Wadson Ferreira                                               */
+/*  All rights reserved.                                                             */
+/*                                                                                   */
+/*  Redistribution and use in source and binary forms, with or without               */
+/*  modification, are permitted provided that the following conditions are met :     */
+/*                                                                                   */
+/*  1. Redistributions of source code must retain the above copyright notice, this   */
+/*     list of conditions and the following disclaimer.                              */
+/*  2. Redistributions in binary form must reproduce the above copyright notice,     */
+/*     this list of conditions and the following disclaimer in the documentation     */
+/*     and / or other materials provided with the distribution.                      */
+/*                                                                                   */
+/*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND  */
+/*  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    */
+/*  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE           */
+/*  DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR   */
+/*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES   */
+/*  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;     */
+/*  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND      */
+/*  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       */
+/*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS    */
+/*  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                     */
+/*                                                                                   */
+/*  The views and conclusions contained in the software and documentation are those  */
+/*  of the authors and should not be interpreted as representing official policies,  */
+/*  either expressed or implied, of the FreeBSD Project.                             */
+/* --------------------------------------------------------------------------------- */
+/* File: RSLPAutomata.java                                                           */
+/* --------------------------------------------------------------------------------- */
+
 package stemmer.rslp;
 
+/**
+ * Implements the RSLP algorithm in the automata based version described in the <a href="https://dl.acm.org/citation.cfm?id=2952670">Assessing the Efficiency of Suffix Stripping Approaches for Portuguese Stemming</a>
+ * 
+ * @version 0.0.1
+ * @author Wadson Ferreira
+ *
+ */
 public class RSLPAutomata {
 	
+	/** Constant to inform that IS NOT to remove accents from the processed word */
 	public static final boolean KEEP_ACCENTS = true;
 	
+	/** Constant to inform that IS to remove accents from the processed word */
 	public static final boolean REMOVE_ACCENTS = false;
 	
+	/** Informs if  some suffix was remove after noun reduction or verb reduction */
 	private boolean suffixRemoved = false;
 	
+	/** Constant used to stop the searching on the given word */
 	private static final int STOP = -1;
 	
+	/**
+	 * Applies the stemming process using automatas
+	 * 
+	 * @param in Word to be processed
+	 * @param accents Receives one of the class constant to execute or not the remove accents step
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String apply(String in, boolean accents) {
 		
+		// if the word ends in 's', execute the plural reduction step
 		if(in.charAt(in.length() - 1) == 's'){
 			in = pluralReduction(in);
 		}
 		
+		// if the word ends in one of the feminine letters (a or ã), execute the feminine reduction step
 		if(in.charAt(in.length() - 1) == 'a' || in.charAt(in.length() - 1) == 'ã'){
 			in = feminineReduction(in);
 		}
 		
+		//execute the degree (augmentative and diminutive) reduction step
 		in = degreeReduction(in);
 		
+		//execute the adverb reduction step
 		in = adverbReduction(in);
 		
+		//execute the noun reduction step
 		in = nounReduction(in);
 		
+		//if none of the noun reduction rules was applied, then execute verb reduction step
 		if(suffixRemoved == false){
 			
 			in = verbReduction(in);
 			
+			//if none of the verb reduction rules was applied, then execute vowel remove step
 			if(suffixRemoved == false){
 				in = removeVowel(in);
 			}
 			
 		}
 		
+		//clean the flag
 		suffixRemoved = false;
 		
+		//remove (or not) the accents based on the flag given
 		if(accents == KEEP_ACCENTS){
 			return in;
 		}else{
@@ -46,6 +109,12 @@ public class RSLPAutomata {
 		
 	}
 	
+	/**
+	 * Executes the plural reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String pluralReduction(String in) {
 		
 		int position = in.length() - 2;
@@ -197,6 +266,12 @@ public class RSLPAutomata {
 		
 	}
 	
+	/**
+	 * Executes the feminine reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String feminineReduction(String in){
 
 		int position = in.length() - 2;
@@ -423,6 +498,12 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	/**
+	 * Executes the degree reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String degreeReduction(String in){
 
 		int position = in.length() - 1;
@@ -852,6 +933,12 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	/**
+	 * Executes the adverb reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String adverbReduction(String in){
 		//rule for word ending in mente
 		if(in.endsWith("mente") == true){
@@ -862,6 +949,12 @@ public class RSLPAutomata {
 		return in;
 	}
 
+	/**
+	 * Executes the noun reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String nounReduction(String in){
 
 		int position = in.length() - 1;
@@ -2319,6 +2412,12 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	/**
+	 * Executes the verb reduction step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String verbReduction(String in){
 
 		int position = in.length() - 1;
@@ -3625,6 +3724,12 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	/**
+	 * Executes the vowel remove step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String removeVowel(String in){
 		if(in.length() > 2 && RSLPException.isException(in, RSLPException.VOWEL) == false){
 			if(in.endsWith("a") || in.endsWith("e") || in.endsWith("o")){
@@ -3634,6 +3739,12 @@ public class RSLPAutomata {
 		return in;
 	}
 
+	/**
+	 * Executes the accents remove step for the given word
+	 * 
+	 * @param in Word to be processed
+	 * @return Processed word. It can be the original word if none of the reductions was applied or a modificated word
+	 */
 	public String removeAccents(String in){
 		return in.replaceAll("à|ã|á|â", "a").replaceAll("é|ê", "e").replaceAll("í", "i").replaceAll("ó|õ|ô", "o").replaceAll("ú", "");
 	}

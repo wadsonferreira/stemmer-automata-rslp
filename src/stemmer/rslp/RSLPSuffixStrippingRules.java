@@ -1,7 +1,52 @@
+/* --------------------------------------------------------------------------------- */
+/*                              Author: Wadson Ferreira                              */
+/*                            wadson.ferreira@outlook.com                            */
+/*                                                                                   */
+/*               **     This banner notice must not be removed      **               */
+/* --------------------------------------------------------------------------------- */
+/*  Copyright(c) 2015, Wadson Ferreira                                               */
+/*  All rights reserved.                                                             */
+/*                                                                                   */
+/*  Redistribution and use in source and binary forms, with or without               */
+/*  modification, are permitted provided that the following conditions are met :     */
+/*                                                                                   */
+/*  1. Redistributions of source code must retain the above copyright notice, this   */
+/*     list of conditions and the following disclaimer.                              */
+/*  2. Redistributions in binary form must reproduce the above copyright notice,     */
+/*     this list of conditions and the following disclaimer in the documentation     */
+/*     and / or other materials provided with the distribution.                      */
+/*                                                                                   */
+/*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND  */
+/*  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    */
+/*  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE           */
+/*  DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR   */
+/*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES   */
+/*  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;     */
+/*  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND      */
+/*  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       */
+/*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS    */
+/*  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                     */
+/*                                                                                   */
+/*  The views and conclusions contained in the software and documentation are those  */
+/*  of the authors and should not be interpreted as representing official policies,  */
+/*  either expressed or implied, of the FreeBSD Project.                             */
+/* --------------------------------------------------------------------------------- */
+/* File: RSLPSuffixStrippingRules.java                                               */
+/* --------------------------------------------------------------------------------- */
+
 package stemmer.rslp;
 
+/**
+ * Stores the rules of the RSLP algorithm.
+ * The rules was extracted from the appendix of 'A Stemming Algorithm for the Portuguese Language'
+ * 
+ * @version 0.0.1
+ * @author Wadson Ferreira
+ *
+ */
 public final class RSLPSuffixStrippingRules {
 	
+	/** Stores the rule to be used in the plural reduction step */
 	public static final RSLPStrippingRule[] PLURAL_REDUCTION_RULES = {
 		new RSLPStrippingRule("ns", 1, "m", null, "bons", "bom"),
 		new RSLPStrippingRule("ões", 3, "ão", null, "balões", "balão"),
@@ -16,6 +61,7 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("s", 2, "", RSLPException.PLURAL_S, "casas","casa")
 	};
 
+	/** Stores the rule to be used in the feminine reduction step */
 	public static final RSLPStrippingRule[] FEMININE_REDUCTION_RULES = {
 		new RSLPStrippingRule("ona", 3, "ão", RSLPException.FEMININE_ONA, "chefona", "chefão"),
 		new RSLPStrippingRule("ã", 2, "ão", RSLPException.FEMININE_AA, "vilã", "vilão"),
@@ -34,10 +80,12 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("eira", 3, "eiro", RSLPException.FEMININE_EIRA, "primeira", "primeiro")
 	};
 	
+	/** Stores the rule to be used in the adverb reduction step */
 	public static final RSLPStrippingRule[] ADVERB_REDUCTION_RULES = {
 		new RSLPStrippingRule("mente", 4, "", RSLPException.ADVERB_MENTE, "felizmente", "feliz")
 	};
 
+	/** Stores the rule to be used in the degree reduction step */
 	public static final RSLPStrippingRule[] DEGREE_REDUCTION_RULES = {
 		new RSLPStrippingRule("díssimo", 5, "", null, "cansadíssimo", "cansa"),  //different from the article
 		new RSLPStrippingRule("abilíssimo", 5, "", null, "admirabilíssimo", "admir"), //the word given at the original article (amabilíssimo) does not make sense because the stem size will be three
@@ -59,6 +107,7 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("ão", 3, "", RSLPException.DEGREE_AO, "meninão", "menin")
 	};
 
+	/** Stores the rule to be used in the noun reduction step */
 	public static final RSLPStrippingRule[] NOUN_REDUCTION_RULES = {
 		new RSLPStrippingRule("encialista", 4, "", null, "existencialista", "exist"),
 		new RSLPStrippingRule("alista", 5, "", null, "minimalista", "minim"),
@@ -123,6 +172,7 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("al", 4, "", RSLPException.NOUN_AL, "experimental", "experiment")
 	};
 
+	/** Stores the rule to be used in the verb reduction step */
 	public static final RSLPStrippingRule[] VERB_REDUCTION_RULES = {
 		new RSLPStrippingRule("aríamo", 2, "", null, "cantaríamo", "cant"),
 		new RSLPStrippingRule("ássemo", 2, "", null, "cantássemo", "cant"),
@@ -215,6 +265,7 @@ public final class RSLPSuffixStrippingRules {
 		new RSLPStrippingRule("i", 3, "", null, "bebi", "beb")
 	};
 	
+	/** Stores the rule to be used in the vowel remove step */
 	public static final RSLPStrippingRule[] VOWEL_REDUCTION_RULES = {
 		new RSLPStrippingRule("a", 3, "", null, "menina", "menin"),
 		new RSLPStrippingRule("e", 3, "", null, "grande", "grand"),
