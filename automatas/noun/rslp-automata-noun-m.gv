@@ -1,0 +1,9 @@
+digraph{
+	rankdir = LR;
+	70 [shape=doublecircle]
+	node [shape=circle]
+	1 -> 67 [label="m"]
+	67 -> 68 [label="e"]
+	68 -> 69 [label="g"]
+	69 -> 70 [label="a"]
+}

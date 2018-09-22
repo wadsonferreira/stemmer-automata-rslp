@@ -1,0 +1,10 @@
+digraph{
+	rankdir = LR;
+	123, 121, 122 [shape=doublecircle]
+	node [shape=circle]
+	0 -> 6 [label="á"]
+	6 -> 120 [label="r"]
+	120 -> 123 [label="i"]
+	120 -> 121 [label="a"]
+	120 -> 122 [label="e"]
+}

@@ -1,0 +1,18 @@
+digraph plural{
+
+	node [shape = doublecircle] 2 3 6 7 8 9 5 10 11 12 13
+	node [shape = circle]
+
+	0 -> 2 [label = "s"]
+	2 -> 3 [label = "n"]
+	2 -> 4 [label = "e"]
+	2 -> 5 [label = "i"]
+	5 -> 10 [label = "a"]
+	5 -> 11 [label = "é"]
+	5 -> 12 [label = "e"]
+	5 -> 13 [label = "ó"]
+	4 -> 6 [label = "õ"]
+	4 -> 7 [label = "ã"]
+	4 -> 8 [label = "l"]
+	4 -> 9 [label = "r"]
+}

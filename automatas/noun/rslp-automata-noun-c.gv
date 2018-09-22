@@ -1,0 +1,12 @@
+digraph{
+	rankdir = LR
+	28, 29, 31, 33 [shape=doublecircle]
+	node [shape=circle]
+	1 -> 27 [label="ç"]
+	28 -> 30 [label="z"]
+	31 -> 32 [label="l"]
+	27 -> 28 [label="a"]
+	27 -> 29 [label="i"]
+	30 -> 31 [label="i"]
+	32 -> 33 [label="a"]
+}

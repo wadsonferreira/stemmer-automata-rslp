@@ -1,0 +1,14 @@
+digraph{
+	rankdir = LR
+	122, 124, 125, 129, 131 [shape=doublecircle]
+	node [shape=circle]
+	1 -> 121 [label="r"]
+	1 -> 128 [label="s"]
+	1 -> 130 [label="z"]
+	122 -> 123 [label="d"]
+	121 -> 122 [label="o"]
+	123 -> 124 [label="a,e"]
+	123 -> 125 [label="i"]
+	128 -> 129 [label="ê"]
+	130 -> 131 [label="e"]
+}

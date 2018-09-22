@@ -1,0 +1,17 @@
+digraph{
+	rankdir = LR;
+	97, 89, 92, 91, 93, 99, 95, 98 [shape=doublecircle]
+	node [shape=circle]
+	0 -> 4 [label="a"]
+	4 -> 96 [label="v"]
+	96 -> 97 [label="a"]
+	4 -> 89 [label="i"]
+	89 -> 90 [label="r"]
+	90 -> 92 [label="e"]
+	90 -> 91 [label="a"]
+	90 -> 93 [label="i"]
+	4 -> 94 [label="r"]
+	94 -> 99 [label="i"]
+	94 -> 95 [label="a"]
+	94 -> 98 [label="e"]
+}

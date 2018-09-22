@@ -1,0 +1,20 @@
+digraph{
+	rankdir = LR
+	56, 51, 53, 52, 61, 58, 63, 136 [shape=doublecircle]
+	node [shape=circle]
+	1 -> 50 [label="l"]
+	50 -> 54 [label="e"]
+	54 -> 55 [label="v"]
+	52 -> 59 [label="c"]
+	59 -> 60 [label="n"]
+	51 -> 57 [label="n"]
+	57 -> 62 [label="o"]
+	55 -> 56 [label="á"]
+	55 -> 136 [label="í"]
+	50 -> 51 [label="a"]
+	51 -> 53 [label="u"]
+	51 -> 52 [label="i"]
+	60 -> 61 [label="e"]
+	57 -> 58 [label="i"]
+	62 -> 63 [label="i"]
+}
