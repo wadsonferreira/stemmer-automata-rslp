@@ -824,4 +824,14 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	public String adverbReduction(String in){
+		//rule for word ending in mente
+		if(in.endsWith("mente") == true){
+			if(RSLPException.isException(in, RSLPException.ADVERB_MENTE) == false){
+				return in.replace("mente", "");
+			}
+		}
+		return in;
+	}
+	
 }
