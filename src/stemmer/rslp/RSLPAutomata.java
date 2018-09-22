@@ -395,4 +395,433 @@ public class RSLPAutomata {
 		return in;
 	}
 	
+	public String degreeReduction(String in){
+
+		int position = in.length() - 1;
+		int state = 0;
+		boolean accept = false;
+
+		while(position >= 0){
+			switch(state){
+			case 0:
+				switch(in.charAt(position)){
+				case 'a':
+					state = 1;
+					position--;
+				break;
+				case 'o':
+					state = 4;
+					position--;
+				break;
+				case 'z':
+					state = 36;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 1:
+				switch(in.charAt(position)){
+				case 'ç':
+					state = 2;
+					position--;
+				break;
+				case 'r':
+					state = 33;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 2:
+				if(in.charAt(position) == 'u'){
+					//rule for word ending in uça
+					if(position >= 3){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			case 4:
+				switch(in.charAt(position)){
+				case 'm':
+					state = 5;
+					position--;
+				break;
+				case 'h':
+					state = 6;
+					position--;
+				break;
+				case 'ã':
+					state = 7;
+					position--;
+				break;
+				case 'ç':
+					state = 8;
+					position--;
+				break;
+				case 'i':
+					state = 41;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 5:
+				if(in.charAt(position) == 'i'){
+					state = 9;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 6:
+				if(in.charAt(position) == 'n'){
+					state = 10;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 7:
+				if(accept){
+					//rule for word ending in ão
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.DEGREE_AO) == false){
+							in = in.substring(0, position);
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'd':
+						state = 44;
+						position--;
+					break;
+					case 'h':
+						state = 11;
+						position--;
+					break;
+					case 'z':
+						//rule for word ending in zão
+						if(RSLPException.isException(in, RSLPException.DEGREE_ZAO) == false){
+							if(position >= 1){
+								in = in.substring(0, position);
+							}
+						}
+						position = STOP;
+					break;
+					default:
+						//rule for word ending in ão
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.DEGREE_AO) == false){
+								in = in.substring(0, position + 1);
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 8:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in aço
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.DEGREE_ACO) == false){
+							in = in.substring(0, position);
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 9:
+				switch(in.charAt(position)){
+				case 's':
+					state = 13;
+					position--;
+				break;
+				case 'r':
+					state = 14;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 10:
+				if(in.charAt(position) == 'i'){
+					state = 15;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 11:
+				if(in.charAt(position) == 'l'){
+					state = 16;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 13:
+				if(in.charAt(position) == 's'){
+					state = 17;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 14:
+				if(in.charAt(position) == 'r'){
+					state = 18;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 15:
+				if(accept){
+					//rule for word ending in inho
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.DEGREE_INHO) == false){
+							in = in.substring(0, position + 1);
+						}
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'z':
+						//rule for word ending in zinho
+						if(position >= 1){
+							in = in.substring(0, position);
+						}
+						position = STOP;
+					break;
+					case 'u':
+						state = 20;
+						position--;
+					break;
+					case 'd':
+						state = 21;
+						position--;
+					break;
+					default:
+						//rule for word ending in inho
+						if(position >= 2){
+							if(RSLPException.isException(in, RSLPException.DEGREE_INHO) == false){
+								in = in.substring(0, position + 1);
+							}
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 16:
+				//rule for word ending in alhão
+				if(in.charAt(position) == 'a'){
+					if(position >= 3){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			case 17:
+				if(in.charAt(position) == 'í'){
+					state = 23;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 18:
+				if(in.charAt(position) == 'é'){
+					//rule for word ending in érrimo
+					if(position >= 3){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			case 20:
+				if(in.charAt(position) == 'q'){
+					//rule for word ending in quinho
+					if(position >= 3){
+						in = in.substring(0, position) + "c";
+					}
+				}else{
+					//rule for word ending in uinho
+					if(position >= 3){
+						in = in.substring(0, position + 1);
+					}
+				}
+				position = STOP;
+			break;
+			case 21:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in adinho
+					if(position >= 2){
+						in = in.substring(0, position);
+					}
+					position = STOP;
+				}else{
+					state = 15;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 23:
+				if(accept){
+					//rule for word ending in íssimo
+					if(position >= 2){
+						in = in.substring(0, position + 1);
+					}
+					position = STOP;
+				}else{
+					switch(in.charAt(position)){
+					case 'd':
+						//rule for word ending in díssimo
+						if(position >= 4){
+							in = in.substring(0, position);
+						}
+						position = STOP;
+					break;
+					case 'l':
+						state = 28;
+						position--;
+					break;
+					default:
+						//rule for word ending in íssimo
+						if(position >= 2){
+							in = in.substring(0, position + 1);
+						}
+						position = STOP;
+					break;
+					}
+				}
+			break;
+			case 28:
+				if(in.charAt(position) == 'i'){
+					state = 29;
+					position--;
+				}else{
+					state = 23;
+					position += 1;
+					accept = true;
+				}
+			break;
+			case 29:
+				if(in.charAt(position) == 'b'){
+					state = 30;
+					position--;
+				}else{
+					state = 23;
+					position += 2;
+					accept = true;
+				}
+			break;
+			case 30:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in abilíssimo
+					if(position >= 4){
+						in = in.substring(0, position);
+					}
+					position = STOP;
+				}else{
+					state = 23;
+					position += 3;
+					accept = true;
+				}
+			break;
+			case 33:
+				if(in.charAt(position) == 'r'){
+					state = 34;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 34:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in arra
+					if(position >= 2){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			case 36:
+				if(in.charAt(position) == 'a'){
+					state = 37;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 37:
+				if(in.charAt(position) == 'r'){
+					state = 38;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 38:
+				if(in.charAt(position) == 'r'){
+					state = 39;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 39:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in arraz
+					if(position >= 3){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			case 41:
+				if(in.charAt(position) == 'z'){
+					state = 42;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 42:
+				if(in.charAt(position) == 'á'){
+					//rule for word ending in ázio
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.DEGREE_AZIO) == false){
+							in = in.substring(0, position);
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 44:
+				if(in.charAt(position) == 'a'){
+					//rule for word ending in adão
+					if(position >= 3){
+						in = in.substring(0, position);
+					}
+				}
+				position = STOP;
+			break;
+			}
+		}
+		return in;
+	}
+	
 }

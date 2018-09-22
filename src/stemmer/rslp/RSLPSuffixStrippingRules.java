@@ -39,14 +39,14 @@ public final class RSLPSuffixStrippingRules {
 	};
 
 	public static final RSLPStrippingRule[] DEGREE_REDUCTION_RULES = {
-		new RSLPStrippingRule("díssimo", 5, "", null, "cansadíssimo", "cansad"),
-		new RSLPStrippingRule("abilíssimo", 5, "", null, "amabilíssimo", "ama"),
-		new RSLPStrippingRule("íssimo", 3, "", null, "foríssimo", "fort"),
+		new RSLPStrippingRule("díssimo", 5, "", null, "cansadíssimo", "cansa"),  //different from the article
+		new RSLPStrippingRule("abilíssimo", 5, "", null, "admirabilíssimo", "admir"), //the word given at the original article (amabilíssimo) does not make sanse because the stem size will be three
+		new RSLPStrippingRule("íssimo", 3, "", null, "fortíssimo", "fort"),
 		new RSLPStrippingRule("érrimo", 4, "", null, "chiquérrimo", "chiqu"),
 		new RSLPStrippingRule("zinho", 2, "", null, "pezinho", "pe"),
 		new RSLPStrippingRule("quinho", 4, "c", null, "maluquinho", "maluc"),
 		new RSLPStrippingRule("uinho", 4, "", null, "amiguinho", "amig"),
-		new RSLPStrippingRule("adinho", 3, "", null, "cansadinho", "cansad"),
+		new RSLPStrippingRule("adinho", 3, "", null, "cansadinho", "cans"), //different from the article
 		new RSLPStrippingRule("inho", 3, "", RSLPException.DEGREE_INHO, "carrinho", "carr"),
 		new RSLPStrippingRule("alhão", 4, "", null, "grandalhão", "grand"),
 		new RSLPStrippingRule("uça", 4, "", null, "dentuça", "dent"),
