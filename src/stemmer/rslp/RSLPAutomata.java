@@ -1,22 +1,48 @@
 package stemmer.rslp;
 
 public class RSLPAutomata {
-
-	public static final boolean REMOVE_ACCENTS = true;
 	
-	public static final boolean KEEP_ACCENTS = false;
+	public static final boolean KEEP_ACCENTS = true;
+	
+	public static final boolean REMOVE_ACCENTS = false;
 	
 	private boolean suffixRemoved = false;
 	
 	private static final int STOP = -1;
 	
-	public String apply(String in) {
+	public String apply(String in, boolean accents) {
 		
-		if(in.charAt(in.length() - 1) == 's') {
+		if(in.charAt(in.length() - 1) == 's'){
 			in = pluralReduction(in);
 		}
 		
-		return in;
+		if(in.charAt(in.length() - 1) == 'a' || in.charAt(in.length() - 1) == 'ã'){
+			in = feminineReduction(in);
+		}
+		
+		in = degreeReduction(in);
+		
+		in = adverbReduction(in);
+		
+		in = nounReduction(in);
+		
+		if(suffixRemoved == false){
+			
+			in = verbReduction(in);
+			
+			if(suffixRemoved == false){
+				in = removeVowel(in);
+			}
+			
+		}
+		
+		suffixRemoved = false;
+		
+		if(accents == KEEP_ACCENTS){
+			return in;
+		}else{
+			return removeAccents(in);
+		}
 		
 	}
 	
