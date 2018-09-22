@@ -169,4 +169,230 @@ public class RSLPAutomata {
 		
 	}
 	
+	public String feminineReduction(String in){
+
+		int position = in.length() - 2;
+		int state = 1;
+
+		while(position >= 0){
+			switch(state){
+			case 1:
+				switch(in.charAt(position)){
+				case 'n':
+					state = 3;
+					position--;
+				break;
+				case 'r':
+					state = 4;
+					position--;
+				break;
+				case 'h':
+					state = 5;
+					position--;
+				break;
+				case 's':
+					state = 6;
+					position--;
+				break;
+				case 'c':
+					state = 7;
+					position--;
+				break;
+				case 'd':
+					state = 8;
+					position--;
+				break;
+				case 'm':
+					state = 9;
+					position--;
+				break;
+				case 'v':
+					state = 10;
+					position--;
+				break;
+				default:
+					if(in.charAt(in.length() - 1) == 'ã'){
+						//rule for word ending in ã
+						if(position >= 1){
+							if(RSLPException.isException(in, RSLPException.FEMININE_AA) == false){
+								in = in.substring(0, position + 1) + "ão";
+							}
+						}
+					}
+					position = STOP;
+				break;
+				}
+			break;
+			case 3:
+				if(in.charAt(position) == 'o'){
+					//rule for word ending in ona
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_ONA) == false){
+							in = in.substring(0, position) + "ão";
+						}
+					}
+				}else{
+					//rule for word ending in a
+					if(position >= 3){
+						if(RSLPException.isException(in, RSLPException.FEMININE_NA) == false){
+							in = in.substring(0, position + 1) + "no";
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 4:
+				switch(in.charAt(position)){
+				case 'i':
+					state = 23;
+					position--;
+				break;
+				case 'o':
+					//rule for word ending in ora
+					if(position >= 2){
+						in = in.substring(0, position) + "or";
+					}
+					position = STOP;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 5:
+				if(in.charAt(position) == 'n'){
+					state = 13;
+					position--;
+				}else{
+					position = STOP;
+				}
+			break;
+			case 6:
+				switch(in.charAt(position)){
+				case 'e':
+					//rule for word ending in esa
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_ESA) == false){
+							in = in.substring(0, position) + "ês";
+						}
+					}
+				break;
+				case 'o':
+					//rule for word ending in osa
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_OSA) == false){
+							in = in.substring(0, position) + "oso";
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 7:
+				switch(in.charAt(position)){
+				case 'i':
+					//rule for word ending in ica
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_ICA) == false){
+							in = in.substring(0, position) + "ico";
+						}
+					}
+					position = STOP;
+				break;
+				case 'a':
+					state = 16;
+					position--;
+				break;
+				default:
+					position = STOP;
+				break;
+				}
+			break;
+			case 8:
+				switch(in.charAt(position)){
+				case 'a':
+					//rule for word ending in ada
+					if(position >= 1){
+						if(RSLPException.isException(in, RSLPException.FEMININE_ADA) == false){
+							in = in.substring(0, position) + "ado";
+						}
+					}
+				break;
+				case 'i':
+					//rule for word ending in ida
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_IDA) == false){
+							in = in.substring(0, position) + "ido";
+						}
+					}
+				break;
+				case 'í':
+					//rule for word ending in ída
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_IIDA) == false){
+							in = in.substring(0, position) + "ído";
+						}
+					}
+				break;
+				}
+				position = STOP;
+			break;
+			case 9:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in ima
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_IMA) == false){
+							in = in.substring(0, position) + "imo";
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 10:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in iva
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_IVA) == false){
+							in = in.substring(0, position) + "ivo";
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 13:
+				if(in.charAt(position) == 'i'){
+					//rule for word ending in inha
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_INHA) == false){
+							in = in.substring(0, position) + "inho";
+						}
+					}
+				}
+				position = STOP;
+			break;
+			case 16:
+				if(in.charAt(position) == 'í'){
+					//rule for word ending in íaca
+					if(position >= 2){
+						in = in.substring(0, position) + "íaco";
+					}
+				}
+				position = STOP;
+			break;
+			case 23:
+				if(in.charAt(position) == 'e'){
+					//rule for word ending in eira
+					if(position >= 2){
+						if(RSLPException.isException(in, RSLPException.FEMININE_EIRA) == false){
+							in = in.substring(0, position) + "eiro";
+						}
+					}
+				}
+				position = STOP;
+			break;
+			}
+		}
+		return in;
+	}
+	
 }
