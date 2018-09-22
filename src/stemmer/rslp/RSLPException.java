@@ -23,7 +23,7 @@ public class RSLPException {
 	FEMININE_IMA = {"vítima"},
 	FEMININE_IVA = {"oliva", "saliva"},
 	FEMININE_EIRA = {"bandeira", "barreira", "beira", "besteira", "cadeira", "capoeira", "feira", "frigideira", "fronteira", "poeira"},
-	FEMININE_A = {"amanhã", "arapuã", "divã", "fã"},
+	FEMININE_AA = {"amanhã", "arapuã", "divã", "fã"},
 
 	ADVERB_MENTE = {"experimente"},
 
