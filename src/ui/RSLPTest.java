@@ -32,6 +32,12 @@ public class RSLPTest {
 		this.input = input;
 	}
 	
+	/**
+	 * Runs the informed RSLP module. Use the class constants to select a module.
+	 * 
+	 * @param module Constant informing the module to be executed.
+	 * @return A String with the result. Each line contains a word.
+	 */
 	public String runRSLP(int module) {
 		
 		String result = "";
@@ -73,6 +79,11 @@ public class RSLPTest {
 		
 	}
 	
+	/**
+	 * Executes the complete algorithm with accents remove for the string entered in the constructor
+	 * 
+	 * @return The result of the application of complete algorithm with accents remove for given words. Each line contains a word.
+	 */
 	private String runCompleteAlgorithmWithAccentsRemove() {
 		
 		String[] words = this.input.split("\n");
@@ -86,6 +97,11 @@ public class RSLPTest {
 		
 	}
 
+	/**
+	 * Executes the complete algorithm without accents remove for the string entered in the constructor
+	 * 
+	 * @return The result of the application of complete algorithm without accents remove for given words. Each line contains a word.
+	 */
 	private String runCompleteAlgorithmWithoutAccentsRemove() {
 		
 		String[] words = this.input.split("\n");
@@ -99,6 +115,11 @@ public class RSLPTest {
 		
 	}
 
+	/**
+	 * Executes the plural reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of plural reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyPluralReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -112,6 +133,11 @@ public class RSLPTest {
 		
 	}
 
+	/**
+	 * Executes the feminine reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of feminine reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyFeminineReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -124,7 +150,12 @@ public class RSLPTest {
 		return result;
 		
 	}
-
+	
+	/**
+	 * Executes the degree reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of degree reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyDegreeReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -138,6 +169,11 @@ public class RSLPTest {
 		
 	}
 
+	/**
+	 * Executes the adverb reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of adverb reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyAdverbReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -151,6 +187,11 @@ public class RSLPTest {
 		
 	}
 	
+	/**
+	 * Executes the noun reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of noun reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyNounReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -164,6 +205,11 @@ public class RSLPTest {
 		
 	}
 	
+	/**
+	 * Executes the verb reduction module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of verb reduction for given words. Each line contains a word.
+	 */
 	private String runOnlyVerbReduction() {
 		
 		String[] words = this.input.split("\n");
@@ -177,6 +223,11 @@ public class RSLPTest {
 		
 	}
 	
+	/**
+	 * Executes the remove vowel module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of vowel removal for given words. Each line contains a word.
+	 */
 	private String runOnlyRemoveVowel() {
 		
 		String[] words = this.input.split("\n");
@@ -190,7 +241,11 @@ public class RSLPTest {
 		
 	}
 	
-
+	/**
+	 * Executes the remove accents module for the string entered in the constructor
+	 * 
+	 * @return The result of the application of accents removal for given words. Each line contains a word.
+	 */
 	private String runOnlyRemoveAccents() {
 		
 		String[] words = this.input.split("\n");
