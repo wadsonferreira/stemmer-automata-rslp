@@ -3049,8 +3049,8 @@ public class RSLPAutomata {
 					}
 					position = STOP;
 				break;
-				case 'í':
-					//rule for word ending in írei
+				case 'i':
+					//rule for word ending in irei
 					if(position >= 2){
 						if(RSLPException.isException(in, RSLPException.VERB_IREI) == false){
 							in = in.substring(0, position);

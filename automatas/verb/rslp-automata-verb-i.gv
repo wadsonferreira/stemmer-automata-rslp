@@ -9,7 +9,7 @@ digraph{
 	45 -> 58 [label="a"]
 	45 -> 61 [label="e"]
 	45 -> 46 [label="á"]
-	45 -> 63 [label="í"]
+	45 -> 63 [label="i"]
 	44 -> 47 [label="í"]
 	47 -> 49 [label="r"]
 	49 -> 56 [label="i"]
