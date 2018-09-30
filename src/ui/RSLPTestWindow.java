@@ -38,6 +38,8 @@ public final class RSLPTestWindow extends JFrame {
 		
 		JMenuBar bar = new JMenuBar();
 		
+		JMenu helpMenu = new JMenu(Language.getString("menu_help"));
+		
 		JMenu languageMenu = new JMenu(Language.getString("menu_language"));
 		
 		JMenuItem languageENG = new JMenuItem(Language.getString("menu_language_en"));
@@ -64,7 +66,8 @@ public final class RSLPTestWindow extends JFrame {
 		});
 		languageMenu.add(languagePT);
 		
-		bar.add(languageMenu);
+		helpMenu.add(languageMenu);
+		bar.add(helpMenu);
 		
 		return bar;
 		
