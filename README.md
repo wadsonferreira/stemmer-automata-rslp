@@ -1,8 +1,10 @@
 # RSLP Automata Stemmer
 
-This projects implements the automata-based version of RSLP algorithm for apply the stemming process in words of the brazilian portuguese language.
+This projects implements the automata-based version of RSLP algorithm for stemming process in brazilian portuguese language. Different from list-based (the original implementation) that use lists of suffix rules and perform a significantly number of comparisons between rules and word suffixes, the automata-based approach uses a deterministic finite automata (DFA) to reduce the number of comparisons to the minimum.
 
-The code was developed following the instructions described in the article [Assessing the Efficiency of Suffix Stripping Approaches for Portuguese Stemming](https://dl.acm.org/citation.cfm?id=2952670). A copy of the article can be found at the folder 'article' of this project.
+The automata-based approach can provided a gain of time up to 86% when compared to the list-based implementation.
+
+The code was developed following the instructions described in the article [Assessing the Efficiency of Suffix Stripping Approaches for Portuguese Stemming](article/suffix-stripping-approaches-paper.pdf).
 
 ## Getting Started
 
@@ -40,7 +42,6 @@ The suffix stripping rules used in class RSLPSuffixStrippingRules were obtained 
 The exception lists used in class RSLPException were obtained in the monograph [Stemming para a língua portuguesa: estudo, análise e melhoria do algoritmo RSLP](https://lume.ufrgs.br/handle/10183/23576)
 
 ### Visual representation of the algorithm
-
 
 A pdf file explaining the working of the algorithms described in the article can be found [here](article/suffix-stripping-approaches-presentation.pdf)
 
