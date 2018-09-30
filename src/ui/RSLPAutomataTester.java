@@ -2,7 +2,7 @@ package ui;
 
 import stemmer.rslp.RSLPAutomata;
 
-public class RSLPTest {
+public class RSLPAutomataTester {
 
 	public static final int COMPLETE_AUTOMATA_WITH_ACCENTS = 0;
 	
@@ -28,8 +28,14 @@ public class RSLPTest {
 	
 	private String input;
 	
-	public RSLPTest(String input) {
+	private long executionTime;
+	
+	public RSLPAutomataTester(String input) {
 		this.input = input;
+	}
+	
+	public long getExecutionTime() {
+		return this.executionTime;
 	}
 	
 	/**
@@ -41,6 +47,8 @@ public class RSLPTest {
 	public String runRSLP(int module) {
 		
 		String result = "";
+		
+		long startTime = System.nanoTime(); 
 		
 		switch(module) {
 		case COMPLETE_AUTOMATA_WITH_ACCENTS:
@@ -74,6 +82,8 @@ public class RSLPTest {
 			result = runOnlyRemoveAccents();
 		break;
 		}
+		
+		this.executionTime = System.nanoTime() - startTime;
 		
 		return result;
 		

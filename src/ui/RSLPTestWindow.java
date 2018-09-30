@@ -22,7 +22,7 @@ public final class RSLPTestWindow extends JFrame {
 		this.mainWindow = this;
 		
 		setTitle(Language.getString("application_title"));
-		setSize(540, 600);
+		setSize(540, 660);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

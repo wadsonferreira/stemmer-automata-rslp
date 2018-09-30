@@ -17,10 +17,18 @@ import stemmer.rslp.RSLPSuffixStrippingRules;
 import ui.i18n.Language;
 
 public class RSLPTestConsolePanel extends JPanel {
-
+	
 	private JTextArea inputWords;
 	
-	private JTextArea resultWords;
+	private JTextArea resultWordsAutomata;
+	
+	private JTextArea resultWordsList;
+	
+	private JLabel resultLabel;
+	
+	private JLabel automataExecutionTime;
+	
+	private JLabel listExecutionTime;
 	
 	private JComboBox<String> actionSelector;
 	
@@ -34,12 +42,22 @@ public class RSLPTestConsolePanel extends JPanel {
 		JPanel actionPanel = generateActionPanel();
 		actionPanel.setBounds(10, 255, 515, 95);
 		
-		JPanel resultPanel = generateResultPanel();
-		resultPanel.setBounds(10, 360, 515, 180);
+		JPanel automataResultPanel = generateAutomataResultPanel();
+		automataResultPanel.setBounds(10, 360, 252, 205);
+		
+		JPanel listResultPanel = generateListResultPanel();
+		listResultPanel.setBounds(272, 360, 252, 205);
+		
+		this.resultLabel = new JLabel("", JLabel.CENTER);
+		resultLabel.setBounds(13, 575, 510, 20);
+		resultLabel.setBackground(Color.GRAY);
+		resultLabel.setOpaque(true);
 
 		add(inputPanel);
 		add(actionPanel);
-		add(resultPanel);
+		add(automataResultPanel);
+		add(listResultPanel);
+		add(resultLabel);
 		
 	}
 	
@@ -132,8 +150,25 @@ public class RSLPTestConsolePanel extends JPanel {
 		button.setBounds(360, 50, 145, 30);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				RSLPTest rslpTest = new RSLPTest(inputWords.getText());
-				resultWords.setText(rslpTest.runRSLP(actionSelector.getSelectedIndex()));
+				
+				RSLPAutomataTester rslpAutomataTest = new RSLPAutomataTester(inputWords.getText());
+				resultWordsAutomata.setText(rslpAutomataTest.runRSLP(actionSelector.getSelectedIndex()));
+				automataExecutionTime.setText(Language.getString("execution_time")+rslpAutomataTest.getExecutionTime()+" ns");
+				
+				RSLPListTester rslpListTest = new RSLPListTester(inputWords.getText());
+				resultWordsList.setText(rslpListTest.runRSLP(actionSelector.getSelectedIndex()));
+				listExecutionTime.setText(Language.getString("execution_time")+rslpListTest.getExecutionTime()+" ns");
+				
+				if(resultWordsAutomata.getText().compareTo(resultWordsList.getText()) == 0) {
+					resultLabel.setText(Language.getString("no_error_on_results"));
+					resultLabel.setBackground(Color.GREEN);
+					resultLabel.setForeground(Color.BLACK);
+				} else {
+					resultLabel.setText(Language.getString("error_on_results"));
+					resultLabel.setBackground(Color.RED);
+					resultLabel.setForeground(Color.WHITE);
+				}
+				
 			}
 		});
 		
@@ -145,13 +180,13 @@ public class RSLPTestConsolePanel extends JPanel {
 		
 	}
 
-	private JPanel generateResultPanel() {
+	private JPanel generateAutomataResultPanel() {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder(
 			BorderFactory.createLineBorder(
 				Color.LIGHT_GRAY, 1, true),
-				Language.getString("result_panel_title"),
+				Language.getString("automata_result_panel_title"),
 				TitledBorder.LEFT,
 				TitledBorder.TOP
 			)
@@ -162,10 +197,44 @@ public class RSLPTestConsolePanel extends JPanel {
 		textArea.setBackground(Color.WHITE);
 		
 		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scroll.setBounds(10, 30, 495, 140);
+		scroll.setBounds(10, 30, 232, 140);
 		
-		this.resultWords = textArea;
+		this.automataExecutionTime = new JLabel(Language.getString("execution_time"));
+		this.automataExecutionTime.setBounds(10, 175, 232, 20);
+		
+		this.resultWordsAutomata = textArea;
 		panel.add(scroll);
+		panel.add(this.automataExecutionTime);
+		
+		return panel;
+		
+	}
+
+	private JPanel generateListResultPanel() {
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(
+				Color.LIGHT_GRAY, 1, true),
+				Language.getString("list_result_panel_title"),
+				TitledBorder.LEFT,
+				TitledBorder.TOP
+			)
+		);
+		panel.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBackground(Color.WHITE);
+		
+		JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(10, 30, 227, 140);
+		
+		this.listExecutionTime = new JLabel(Language.getString("execution_time"));
+		this.listExecutionTime.setBounds(10, 175, 232, 20);
+		
+		this.resultWordsList = textArea;
+		panel.add(scroll);
+		panel.add(this.listExecutionTime);
 		
 		return panel;
 		
